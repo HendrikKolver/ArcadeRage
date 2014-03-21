@@ -448,6 +448,13 @@ namespace MainGame
             level3Manager.Unload();
             bossFightManager.Unload();
 
+            tutManager = new ContentManager(this.Services, "Content1");
+            defaultManager = new ContentManager(this.Services, "Content");
+            level1Manager = new ContentManager(this.Services, "level1");
+            level2Manager = new ContentManager(this.Services, "level2");
+            level3Manager = new ContentManager(this.Services, "level3");
+            bossFightManager = new ContentManager(this.Services, "bossFight");
+
         }
 
         protected void loadLevel1()
@@ -2125,6 +2132,7 @@ namespace MainGame
                     levelScores[i] = "X";
                 }
                 mainMenu = true;
+                unloadAll();
                 player.switchEquipedWeapon();
                 soundBank.PlayCue("Pickup");  
                 
@@ -2228,6 +2236,7 @@ namespace MainGame
                     }
                 }
                 mainMenu = true;
+                unloadAll();
             }
             if (BGExtras.credits.isPlaying)
             {
@@ -2296,6 +2305,7 @@ namespace MainGame
                         BGExtras.credits.currentSection = 0;
                         BGExtras.credits.reset();
                         mainMenu = true;
+                        unloadAll();
                         BGExtras.credits.isPlaying = false;
                         
                         for (int i = 0; i < enemies.getSize(); i++)
@@ -2670,6 +2680,7 @@ namespace MainGame
                     {
                         mainMenuRow = 1;
                         mainMenu = true;
+                        unloadAll();
                     }
                 }
 
@@ -3977,6 +3988,7 @@ namespace MainGame
             {
                 crafting = false;
                 mainMenu = true;
+                unloadAll();
             }
             if (count < 50)
                 count++;
