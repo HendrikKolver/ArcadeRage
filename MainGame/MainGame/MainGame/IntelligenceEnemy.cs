@@ -159,6 +159,10 @@ namespace MainGame
                             recoilCounter = 0;
                             throwCount = 0;
                             recoilForward = false;
+                            throwing = false;
+                            inRange = false;
+                            startDelay = true;
+                            attackDelay = 0;
                         }
                     }
                     else if (recoilBackward)
@@ -170,6 +174,10 @@ namespace MainGame
                             recoilCounter = 0;
                             throwCount = 0;
                             recoilBackward = false;
+                            throwing = false;
+                            inRange = false;
+                            startDelay = true;
+                            attackDelay = 0;
                         }
                     }
                     else if (position.X >= player.getPosition().X + 500 && (throwCount == 0 || throwCount >= ThrowSpeed))
@@ -227,13 +235,7 @@ namespace MainGame
                         inRange = false;
                     }
 
-                    if (recoilBackward || recoilForward)
-                    {
-                        throwing = false;
-                        throwCount = 0;
-                        inRange = false;
-                        startDelay = true;
-                    }
+                    
 
                     //No Close range attack uncomment for close range attack and death
                     /*if (enemyBounds.Intersects(player.getPlayerBounds()))
@@ -270,6 +272,7 @@ namespace MainGame
 
                     }
                     else*/
+                    
                     if (inRange && !throwing && !recoilBackward && !recoilForward && throwCount == 0 && attackDelay >= attackDelaySpeed && !isOffScreen)
                     {
                         attackDelay = 0;
@@ -289,6 +292,7 @@ namespace MainGame
                         // Console.WriteLine("ThrwThrow!");
                         projectile.throwObject();
                     }
+
                     if (startDelay)
                     {
                         if (!lookingLeft)
@@ -304,6 +308,7 @@ namespace MainGame
                             startDelay = false;
                         }
                     }
+
                     if (throwing)
                     {
                         throwCount++;
