@@ -2120,6 +2120,7 @@ namespace MainGame
                 player.specialWeapon = null;
                 recraft = false;
                 crafting = false;
+                fadedIn = false;
                 count = 0;
                 isEnterUp = true;
                 player.weaponInventory = new List<Weapon>();
@@ -5589,7 +5590,7 @@ namespace MainGame
 
             hud.setTotalAmount(2000);
 
-            if (fadeInCount == 50 && !fadedIn)
+            if (fadeInCount >= 50 && !fadedIn)
             {
                 tutText.setText(1);
                 fadedIn = true;
