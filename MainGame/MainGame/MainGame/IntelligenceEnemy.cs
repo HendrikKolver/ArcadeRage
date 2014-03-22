@@ -235,6 +235,15 @@ namespace MainGame
                         inRange = false;
                     }
 
+                    if (recoilBackward || recoilForward)
+                    {
+                        throwing = false;
+                        throwCount = 0;
+                        inRange = false;
+                        startDelay = true;
+                    }
+
+
                     
 
                     //No Close range attack uncomment for close range attack and death

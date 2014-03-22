@@ -368,9 +368,6 @@ namespace MainGame
 
             //BGExtras.credits = new Credits(soundBank);
 
-            //main menu animaiton
-            idlingAnimationMainMenu = new Animation(new Vector2(120, 270));
-
             levelMenuTextures = new List<Texture2D>();
             levelUnlocked = new bool[5];
             levelUnlocked[0] = true;
@@ -435,6 +432,12 @@ namespace MainGame
             gymParalax1 = tutManager.Load<Texture2D>("Gym paralax 1");
             gymParalax2 = tutManager.Load<Texture2D>("Gym paralax 2");
             gymLoadingScreen = tutManager.Load<Texture2D>("GymLoading");
+
+            tutObjectTexture1 = tutManager.Load<Texture2D>("Baseball1");
+            tutObjectTexture2 = tutManager.Load<Texture2D>("Baseball2");
+            tutObjectTexture3 = tutManager.Load<Texture2D>("Baseball3");
+            tutObjectTexture4 = tutManager.Load<Texture2D>("Baseball4");
+            
         }
 
         protected void unloadAll()
@@ -464,6 +467,11 @@ namespace MainGame
             classLoadingScreen = level1Manager.Load<Texture2D>("ClassLoading");
             bgTexture = level1Manager.Load<Texture2D>("BG");
             bgTexture2 = level1Manager.Load<Texture2D>("BG2");
+
+            objectTexture1 = level1Manager.Load<Texture2D>("Book 1");
+            objectTexture2 = level1Manager.Load<Texture2D>("Book 2");
+            objectTexture3 = level1Manager.Load<Texture2D>("Book 3");
+            objectTexture4 = level1Manager.Load<Texture2D>("Book 4");
         }
 
         protected void loadLevel2()
@@ -472,6 +480,12 @@ namespace MainGame
             scienceLoading = level2Manager.Load<Texture2D>("LabLoading");
             level2BG1 = level2Manager.Load<Texture2D>("Science Lab1");
             level2BG2 = level2Manager.Load<Texture2D>("Science Lab2");
+
+            labObjectTexture1 = level2Manager.Load<Texture2D>("Calculator1");
+            labObjectTexture2 = level2Manager.Load<Texture2D>("Calculator2");
+            labObjectTexture3 = level2Manager.Load<Texture2D>("Calculator3");
+            labObjectTexture4 = level2Manager.Load<Texture2D>("Calculator4");
+            
         }
 
         protected void loadLevel3()
@@ -480,13 +494,151 @@ namespace MainGame
             cafLoading = level3Manager.Load<Texture2D>("CafeteriaLoading");
             level3BG1 = level3Manager.Load<Texture2D>("Cafeteria1");
             level3BG2 = level3Manager.Load<Texture2D>("Cafeteria2");
+
+            cafObjectTexture1 = level3Manager.Load<Texture2D>("pl1");
+            cafObjectTexture2 = level3Manager.Load<Texture2D>("pl2");
+            cafObjectTexture3 = level3Manager.Load<Texture2D>("pl3");
+            cafObjectTexture4 = level3Manager.Load<Texture2D>("pl4");
+            
         }
 
         protected void loadBossFight()
         {
             unloadAll();
             bossLoading = bossFightManager.Load<Texture2D>("CatheralOfSavageryLoading");//should load from boss fight load
-            bossFightBG = bossFightManager.Load<Texture2D>("Final Level"); 
+            bossFightBG = bossFightManager.Load<Texture2D>("Final Level");
+
+            //EvilJP_HUD
+            BGExtras.hud1 = bossFightManager.Load<Texture2D>("bossHUD1");
+            BGExtras.hud2 = bossFightManager.Load<Texture2D>("bossHUD2");
+            BGExtras.hud3 = bossFightManager.Load<Texture2D>("bossHUD3");
+            BGExtras.blueHP = bossFightManager.Load<Texture2D>("blueHealth");
+            BGExtras.purpleHP = bossFightManager.Load<Texture2D>("purpleHealth");
+            BGExtras.redHP = bossFightManager.Load<Texture2D>("redHealth");
+            BGExtras.emptyJPHealth = bossFightManager.Load<Texture2D>("blankJPHealth");
+
+            bossFightObjectTexture1 = bossFightManager.Load<Texture2D>("SpikeBall1");
+            bossFightObjectTexture2 = bossFightManager.Load<Texture2D>("SpikeBall2");
+            bossFightObjectTexture3 = bossFightManager.Load<Texture2D>("SpikeBall3");
+            bossFightObjectTexture4 = bossFightManager.Load<Texture2D>("SpikeBall4");
+
+            //BossFighhtTextures------------------------------------------------------------------------------
+
+
+            deathBoss = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 130; i++)
+                deathBoss.AddCell(bossFightManager.Load<Texture2D>("Boss Death " + i));
+
+            Idle1Boss = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 9; i++)
+                Idle1Boss.AddCell(bossFightManager.Load<Texture2D>("Boss Idle " + i));
+
+
+            Recoil1Boss = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 4; i++)
+                Recoil1Boss.AddCell(bossFightManager.Load<Texture2D>("Boss Recoil " + i));
+
+
+            Walk1Boss = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 9; i++)
+                Walk1Boss.AddCell(bossFightManager.Load<Texture2D>("Boss Walk " + i));
+
+
+            Attack1Boss = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 6; i++)
+                Attack1Boss.AddCell(bossFightManager.Load<Texture2D>("Boss Punch " + i));
+
+            Attack1BossVar1 = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 6; i++)
+                Attack1BossVar1.AddCell(bossFightManager.Load<Texture2D>("Boss Kick " + i));
+
+            Attack1BossVar2 = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 6; i++)
+                Attack1BossVar2.AddCell(bossFightManager.Load<Texture2D>("Boss Punch 2 " + i));
+
+
+
+            Idle2Boss = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 9; i++)
+                Idle2Boss.AddCell(bossFightManager.Load<Texture2D>("Radioactive Boss Idle " + i));
+
+
+            Recoil2Boss = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 4; i++)
+                Recoil2Boss.AddCell(bossFightManager.Load<Texture2D>("Radioactive Boss Recoil " + i));
+
+
+            Walk2Boss = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 9; i++)
+                Walk2Boss.AddCell(bossFightManager.Load<Texture2D>("Radioactive Boss Walk " + i));
+
+
+            Attack2Boss = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 6; i++)
+                Attack2Boss.AddCell(bossFightManager.Load<Texture2D>("Radioactive Boss Punch " + i));
+
+            Attack2BossVar1 = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 6; i++)
+                Attack2BossVar1.AddCell(bossFightManager.Load<Texture2D>("Radioactive Boss Punch 2 " + i));
+
+            Idle3Boss = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 9; i++)
+                Idle3Boss.AddCell(bossFightManager.Load<Texture2D>("LightSaber Boss Idle " + i));
+
+
+            Recoil3Boss = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 4; i++)
+                Recoil3Boss.AddCell(bossFightManager.Load<Texture2D>("LightSaber Boss Recoil " + i));
+
+
+            Walk3Boss = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 9; i++)
+                Walk3Boss.AddCell(bossFightManager.Load<Texture2D>("LightSaber Boss Walk " + i));
+
+
+            Attack3Boss = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 6; i++)
+                Attack3Boss.AddCell(bossFightManager.Load<Texture2D>("Boss Lighsaber Attack " + i));
+
+            Attack3BossVar1 = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 6; i++)
+                Attack3BossVar1.AddCell(bossFightManager.Load<Texture2D>("Boss Lightsaber Attack 2 " + i));
+
+
+            powerUp1 = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 23; i++)
+                powerUp1.AddCell(bossFightManager.Load<Texture2D>("First Powerup " + i));
+
+            powerUp2 = new Animation(new Vector2(100, 100));
+            for (int i = 1; i < 23; i++)
+                powerUp2.AddCell(bossFightManager.Load<Texture2D>("Second Powerup " + i));
+
+            Texture2D[] bossFightTextures = new Texture2D[8];
+            for (int i = 1; i < 9; i++)
+                bossFightTextures[i - 1] = (bossFightManager.Load<Texture2D>("LightSaber Boss Walk " + i));
+
+
+            enemyHandler.Attack1Boss = Attack1Boss;
+            enemyHandler.Attack1BossVar1 = Attack1BossVar1;
+            enemyHandler.Attack1BossVar2 = Attack1BossVar2;
+            enemyHandler.Attack2Boss = Attack2Boss;
+            enemyHandler.Attack2BossVar1 = Attack2BossVar1;
+            enemyHandler.Attack3Boss = Attack3Boss;
+            enemyHandler.Attack3BossVar1 = Attack3BossVar1;
+            enemyHandler.Walk1Boss = Walk1Boss;
+            enemyHandler.Walk2Boss = Walk2Boss;
+            enemyHandler.Walk3Boss = Walk3Boss;
+            enemyHandler.Idle1Boss = Idle1Boss;
+            enemyHandler.Idle2Boss = Idle2Boss;
+            enemyHandler.Idle3Boss = Idle3Boss;
+            enemyHandler.Recoil1Boss = Recoil1Boss;
+            enemyHandler.Recoil2Boss = Recoil2Boss;
+            enemyHandler.Recoil3Boss = Recoil3Boss;
+            enemyHandler.deathBoss = deathBoss;
+            enemyHandler.powerUp1 = powerUp1;
+            enemyHandler.powerUp2 = powerUp2;
+            enemyHandler.setBossTextures(bossFightTextures);
+            //-------------------------------------------------------------------------------------------------
         }
 
         protected override void LoadContent()
@@ -516,8 +668,6 @@ namespace MainGame
             BGExtras.credits.allImages[5] = defaultManager.Load<Texture2D>("credits6");
             BGExtras.credits.allImages[7] = defaultManager.Load<Texture2D>("credits7");
             BGExtras.credits.allImages[6] = defaultManager.Load<Texture2D>("credits8");
-
-
 
             scoreImages[0] = defaultManager.Load<Texture2D>("LevelScoreA+");
             scoreImages[1] = defaultManager.Load<Texture2D>("LevelScoreA");
@@ -562,14 +712,6 @@ namespace MainGame
             progressScreens[3] = defaultManager.Load<Texture2D>("Level3Progress");
             progressScreens[4] = defaultManager.Load<Texture2D>("Level0Progress");
 
-            //EvilJP_HUD
-            BGExtras.hud1 = defaultManager.Load<Texture2D>("bossHUD1");
-            BGExtras.hud2 = defaultManager.Load<Texture2D>("bossHUD2");
-            BGExtras.hud3 = defaultManager.Load<Texture2D>("bossHUD3");
-            BGExtras.blueHP = defaultManager.Load<Texture2D>("blueHealth");
-            BGExtras.purpleHP = defaultManager.Load<Texture2D>("purpleHealth");
-            BGExtras.redHP = defaultManager.Load<Texture2D>("redHealth");
-            BGExtras.emptyJPHealth = defaultManager.Load<Texture2D>("blankJPHealth");
 
             //trees
             trees1 = defaultManager.Load<Texture2D>("treesBGBottom");
@@ -600,74 +742,6 @@ namespace MainGame
                 gameBG.lastLevel = false;
 
             }
-            else if (level == 1)
-            {
-
-                gameBG.AddLayer(trees1, 2, 200.0f);
-                gameBG.AddLayer(trees1, 2, 200.0f);
-                gameBG.AddLayer(trees1, 2, 200.0f);
-
-                gameBG.AddLayer(trees2, 1, 200.0f);
-                gameBG.AddLayer(trees2, 1, 200.0f);
-                gameBG.AddLayer(trees2, 1, 200.0f);
-
-                gameBG.AddLayer(bgTexture, 0, 200.0f);
-                gameBG.AddLayer(bgTexture2, 0, 200.0f);
-                gameBG.AddLayer(bgTexture, 0, 200.0f);
-                gameBG.lastLevel = false;
-            }
-            else if (level == 2)
-            {
-
-                gameBG.AddLayer(trees1, 2, 200.0f);
-                gameBG.AddLayer(trees1, 2, 200.0f);
-                gameBG.AddLayer(trees1, 2, 200.0f);
-
-                gameBG.AddLayer(trees2, 1, 200.0f);
-                gameBG.AddLayer(trees2, 1, 200.0f);
-                gameBG.AddLayer(trees2, 1, 200.0f);
-
-                gameBG.AddLayer(level2BG1, 0, 200.0f);
-                gameBG.AddLayer(level2BG2, 0, 200.0f);
-                gameBG.AddLayer(level2BG1, 0, 200.0f);
-                gameBG.lastLevel = false;
-            }
-            else if (level == 3)
-            {
-
-                gameBG.AddLayer(trees1, 2, 200.0f);
-                gameBG.AddLayer(trees1, 2, 200.0f);
-                gameBG.AddLayer(trees1, 2, 200.0f);
-
-                gameBG.AddLayer(trees2, 1, 200.0f);
-                gameBG.AddLayer(trees2, 1, 200.0f);
-                gameBG.AddLayer(trees2, 1, 200.0f);
-
-                gameBG.AddLayer(level3BG1, 0, 200.0f);
-                gameBG.AddLayer(level3BG2, 0, 200.0f);
-                gameBG.AddLayer(level3BG1, 0, 200.0f);
-                gameBG.lastLevel = false;
-            }
-            else if (level == 4)
-            {
-
-                gameBG.AddLayer(bossTrees1, 2, 200.0f);
-                gameBG.AddLayer(bossTrees1, 2, 200.0f);
-                gameBG.AddLayer(bossTrees1, 2, 200.0f);
-
-                gameBG.AddLayer(bossTrees2, 1, 200.0f);
-                gameBG.AddLayer(bossTrees2, 1, 200.0f);
-                gameBG.AddLayer(bossTrees2, 1, 200.0f);
-
-                gameBG.AddLayer(bossFightBG, 0, 200.0f);
-                gameBG.AddLayer(bossFightBG, 0, 200.0f);
-                gameBG.AddLayer(bossFightBG, 0, 200.0f);
-                gameBG.lastLevel = true;
-            }
-
-
-            
-
 
             //LOADING OF ANIMATION TEXTURES
 
@@ -820,29 +894,6 @@ namespace MainGame
             craftMusic = soundBank.GetCue("Cubish");
             goWest = soundBank.GetCue("West");
             creditsMusic = soundBank.GetCue("Credits");
-            //menuMusic.Play();
-
-            objectTexture1 = defaultManager.Load<Texture2D>("Book 1");
-            objectTexture2 = defaultManager.Load<Texture2D>("Book 2");
-            objectTexture3 = defaultManager.Load<Texture2D>("Book 3");
-            objectTexture4 = defaultManager.Load<Texture2D>("Book 4");
-            tutObjectTexture1 = defaultManager.Load<Texture2D>("Baseball1");
-            tutObjectTexture2 = defaultManager.Load<Texture2D>("Baseball2");
-            tutObjectTexture3 = defaultManager.Load<Texture2D>("Baseball3");
-            tutObjectTexture4 = defaultManager.Load<Texture2D>("Baseball4");
-            labObjectTexture1 = defaultManager.Load<Texture2D>("Calculator1");
-            labObjectTexture2 = defaultManager.Load<Texture2D>("Calculator2");
-            labObjectTexture3 = defaultManager.Load<Texture2D>("Calculator3");
-            labObjectTexture4 = defaultManager.Load<Texture2D>("Calculator4");
-            cafObjectTexture1 = defaultManager.Load<Texture2D>("pl1");
-            cafObjectTexture2 = defaultManager.Load<Texture2D>("pl2");
-            cafObjectTexture3 = defaultManager.Load<Texture2D>("pl3");
-            cafObjectTexture4 = defaultManager.Load<Texture2D>("pl4");
-            bossFightObjectTexture1 = defaultManager.Load<Texture2D>("SpikeBall1");
-            bossFightObjectTexture2 = defaultManager.Load<Texture2D>("SpikeBall2");
-            bossFightObjectTexture3 = defaultManager.Load<Texture2D>("SpikeBall3");
-            bossFightObjectTexture4 = defaultManager.Load<Texture2D>("SpikeBall4");
-
 
             //All Loot Items
             dropItemFont = defaultManager.Load<SpriteFont>("DropItemFont");
@@ -869,124 +920,6 @@ namespace MainGame
                 allItems[i].DropItemFont = dropItemFont;
 
             enemyHandler = new EnemyHandler(strengthTextures, agilityTextures, intelligenceTextures, punchingBagTextures, allItems, graphics.GraphicsDevice, player, particleSystem, particleSystem2);
-
-            //BossFighhtTextures------------------------------------------------------------------------------
-
-
-            deathBoss = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 130; i++)
-                deathBoss.AddCell(defaultManager.Load<Texture2D>("Boss Death " + i));
-
-            Idle1Boss = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 9; i++)
-                Idle1Boss.AddCell(defaultManager.Load<Texture2D>("Boss Idle " + i));
-
-
-            Recoil1Boss = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 4; i++)
-                Recoil1Boss.AddCell(defaultManager.Load<Texture2D>("Boss Recoil " + i));
-
-
-            Walk1Boss = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 9; i++)
-                Walk1Boss.AddCell(defaultManager.Load<Texture2D>("Boss Walk " + i));
-
-
-            Attack1Boss = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 6; i++)
-                Attack1Boss.AddCell(defaultManager.Load<Texture2D>("Boss Punch " + i));
-
-            Attack1BossVar1 = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 6; i++)
-                Attack1BossVar1.AddCell(defaultManager.Load<Texture2D>("Boss Kick " + i));
-
-            Attack1BossVar2 = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 6; i++)
-                Attack1BossVar2.AddCell(defaultManager.Load<Texture2D>("Boss Punch 2 " + i));
-
-
-
-            Idle2Boss = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 9; i++)
-                Idle2Boss.AddCell(defaultManager.Load<Texture2D>("Radioactive Boss Idle " + i));
-
-
-            Recoil2Boss = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 4; i++)
-                Recoil2Boss.AddCell(defaultManager.Load<Texture2D>("Radioactive Boss Recoil " + i));
-
-
-            Walk2Boss = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 9; i++)
-                Walk2Boss.AddCell(defaultManager.Load<Texture2D>("Radioactive Boss Walk " + i));
-
-
-            Attack2Boss = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 6; i++)
-                Attack2Boss.AddCell(defaultManager.Load<Texture2D>("Radioactive Boss Punch " + i));
-
-            Attack2BossVar1 = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 6; i++)
-                Attack2BossVar1.AddCell(defaultManager.Load<Texture2D>("Radioactive Boss Punch 2 " + i));
-
-            Idle3Boss = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 9; i++)
-                Idle3Boss.AddCell(defaultManager.Load<Texture2D>("LightSaber Boss Idle " + i));
-
-
-            Recoil3Boss = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 4; i++)
-                Recoil3Boss.AddCell(defaultManager.Load<Texture2D>("LightSaber Boss Recoil " + i));
-
-
-            Walk3Boss = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 9; i++)
-                Walk3Boss.AddCell(defaultManager.Load<Texture2D>("LightSaber Boss Walk " + i));
-
-
-            Attack3Boss = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 6; i++)
-                Attack3Boss.AddCell(defaultManager.Load<Texture2D>("Boss Lighsaber Attack " + i));
-
-            Attack3BossVar1 = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 6; i++)
-                Attack3BossVar1.AddCell(defaultManager.Load<Texture2D>("Boss Lightsaber Attack 2 " + i));
-
-            
-            powerUp1 = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 23; i++)
-                powerUp1.AddCell(defaultManager.Load<Texture2D>("First Powerup " + i));
-
-            powerUp2 = new Animation(new Vector2(100, 100));
-            for (int i = 1; i < 23; i++)
-                powerUp2.AddCell(defaultManager.Load<Texture2D>("Second Powerup " + i));
-
-            Texture2D[] bossFightTextures = new Texture2D[8];
-            for (int i = 1; i < 9; i++)
-                bossFightTextures[i - 1] = (defaultManager.Load<Texture2D>("LightSaber Boss Walk " + i));
-
-
-            enemyHandler.Attack1Boss = Attack1Boss;
-            enemyHandler.Attack1BossVar1 = Attack1BossVar1;
-            enemyHandler.Attack1BossVar2 = Attack1BossVar2;
-            enemyHandler.Attack2Boss = Attack2Boss;
-            enemyHandler.Attack2BossVar1 = Attack2BossVar1;
-            enemyHandler.Attack3Boss = Attack3Boss;
-            enemyHandler.Attack3BossVar1 = Attack3BossVar1;
-            enemyHandler.Walk1Boss = Walk1Boss;
-            enemyHandler.Walk2Boss = Walk2Boss;
-            enemyHandler.Walk3Boss = Walk3Boss;
-            enemyHandler.Idle1Boss = Idle1Boss;
-            enemyHandler.Idle2Boss = Idle2Boss;
-            enemyHandler.Idle3Boss = Idle3Boss;
-            enemyHandler.Recoil1Boss = Recoil1Boss;
-            enemyHandler.Recoil2Boss = Recoil2Boss;
-            enemyHandler.Recoil3Boss = Recoil3Boss;
-            enemyHandler.deathBoss = deathBoss;
-            enemyHandler.powerUp1 = powerUp1;
-            enemyHandler.powerUp2 = powerUp2;
-            enemyHandler.setBossTextures(bossFightTextures);
-            //-------------------------------------------------------------------------------------------------
 
             enemyHandler.addStrengthThumbnail(defaultManager.Load<Texture2D>("JockThumb"));
             enemyHandler.addIntelligenceThumbnail(defaultManager.Load<Texture2D>("IntelligenceThumb"));
@@ -1278,8 +1211,6 @@ namespace MainGame
             intelligenceAttack[13] = defaultManager.Load<Texture2D>("Intelligence Attack 6");
 
             enemyHandler.setAttackIntelligenceTextures(intelligenceAttack);
-            //arrowAnimation.LoopAll(0.6f);
-
 
             //Load Tesla coil textures
             teslaObstacle = new Texture2D[3];
@@ -1325,50 +1256,11 @@ namespace MainGame
 
             //Main Menu Load ---------------------------------------------
             baseMainMenu = defaultManager.Load<Texture2D>("MainMenu");
-            //playHover = defaultManager.Load<Texture2D>("MainMenuPlayHover");
-            //optionsHover = defaultManager.Load<Texture2D>("MainMenuOptionsHover");
-            //helpHover = defaultManager.Load<Texture2D>("MainMenuHelpHover");
-            //exitHover = defaultManager.Load<Texture2D>("MainMenuExitHover");
 
             playHover = defaultManager.Load<Texture2D>("MainMenuSelector");
             optionsHover = defaultManager.Load<Texture2D>("MainMenuSelector");
             helpHover = defaultManager.Load<Texture2D>("MainMenuSelector");
             exitHover = defaultManager.Load<Texture2D>("MainMenuSelector");
-
-            for (int i = 1; i < 9; i++)
-            {
-                idlingAnimationMainMenu.AddCell(defaultManager.Load<Texture2D>("IdleMain " + i));
-            }
-            for (int i = 1; i < 9; i++)
-            {
-                idlingAnimationMainMenu.AddCell(defaultManager.Load<Texture2D>("IdleMain " + i));
-            }
-            for (int i = 1; i < 9; i++)
-            {
-                idlingAnimationMainMenu.AddCell(defaultManager.Load<Texture2D>("IdleMain " + i));
-            }
-            idlingAnimationMainMenu.AddCell(defaultManager.Load<Texture2D>("Blink 1"));
-            idlingAnimationMainMenu.AddCell(defaultManager.Load<Texture2D>("Blink 2"));
-            idlingAnimationMainMenu.AddCell(defaultManager.Load<Texture2D>("Blink 3"));
-            for (int i = 4; i < 9; i++)
-            {
-                idlingAnimationMainMenu.AddCell(defaultManager.Load<Texture2D>("IdleMain " + i));
-            }
-            for (int i = 1; i < 9; i++)
-            {
-                idlingAnimationMainMenu.AddCell(defaultManager.Load<Texture2D>("IdleMain " + i));
-            }
-            for (int i = 1; i < 9; i++)
-            {
-                idlingAnimationMainMenu.AddCell(defaultManager.Load<Texture2D>("IdleMain " + i));
-            }
-            idlingAnimationMainMenu.AddCell(defaultManager.Load<Texture2D>("Blink 1"));
-            idlingAnimationMainMenu.AddCell(defaultManager.Load<Texture2D>("Blink 2"));
-            idlingAnimationMainMenu.AddCell(defaultManager.Load<Texture2D>("Blink 3"));
-            for (int i = 4; i < 9; i++)
-            {
-                idlingAnimationMainMenu.AddCell(defaultManager.Load<Texture2D>("IdleMain " + i));
-            }
 
             mainMenuSettingsTexture = defaultManager.Load<Texture2D>("MainMenuSettings");
             mainMenuOptionsSelectorTexture = defaultManager.Load<Texture2D>("OptionsSelector");
@@ -2247,12 +2139,7 @@ namespace MainGame
             
             if (mainMenu)
             {
-                idlingAnimationMainMenu.Update(gameTime);
-
-                if (!idlingAnimationMainMenu.playing)
-                {
-                    idlingAnimationMainMenu.LoopAll(6.0f);
-                }
+                
 
                 if (goWest.IsPlaying)
                 {
@@ -5503,16 +5390,9 @@ namespace MainGame
                     spriteBatch.Draw(baseMainMenu, new Vector2(0, 0), Color.White);
                     if (mainMenuToDraw != null)
                         mainMenuToDraw.Draw(spriteBatch);
-                    /*if (mainMenuRow == 1)
-                        spriteBatch.Draw(playHover, new Vector2(789, 357), Color.White);
-                    else if (mainMenuRow == 2)
-                        spriteBatch.Draw(optionsHover, new Vector2(789, 467), Color.White);
-                    else if (mainMenuRow == 3)
-                        spriteBatch.Draw(helpHover, new Vector2(789, 577), Color.White);
-                    else if (mainMenuRow == 4)
-                        spriteBatch.Draw(exitHover, new Vector2(789, 687), Color.White);*/
+                   
 
-                    //idlingAnimationMainMenu.Draw(spriteBatch);
+                    
                 }
             }
 
