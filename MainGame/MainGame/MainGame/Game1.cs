@@ -16,6 +16,8 @@ namespace MainGame
     public class Game1 : Microsoft.Xna.Framework.Game
     {
 
+        Boolean unloaded = false;
+
         //BossStuff--------------------------------------------------------
          Animation Attack1Boss;
          Animation Attack1BossVar1;
@@ -437,27 +439,30 @@ namespace MainGame
             tutObjectTexture2 = tutManager.Load<Texture2D>("Baseball2");
             tutObjectTexture3 = tutManager.Load<Texture2D>("Baseball3");
             tutObjectTexture4 = tutManager.Load<Texture2D>("Baseball4");
+            unloaded = false;
             
         }
 
         protected void unloadAll()
         {
-            row = 0;    //Reset for the next craft
-            col = 0;
 
-            tutManager.Unload();
-            level1Manager.Unload();
-            level2Manager.Unload();
-            level3Manager.Unload();
-            bossFightManager.Unload();
+                
+                row = 0;    //Reset for the next craft
+                col = 0;
 
-            tutManager = new ContentManager(this.Services, "Content1");
-            defaultManager = new ContentManager(this.Services, "Content");
-            level1Manager = new ContentManager(this.Services, "level1");
-            level2Manager = new ContentManager(this.Services, "level2");
-            level3Manager = new ContentManager(this.Services, "level3");
-            bossFightManager = new ContentManager(this.Services, "bossFight");
+                tutManager.Unload();
+                level1Manager.Unload();
+                level2Manager.Unload();
+                level3Manager.Unload();
+                bossFightManager.Unload();
 
+                tutManager = new ContentManager(this.Services, "Content1");
+                defaultManager = new ContentManager(this.Services, "Content");
+                level1Manager = new ContentManager(this.Services, "level1");
+                level2Manager = new ContentManager(this.Services, "level2");
+                level3Manager = new ContentManager(this.Services, "level3");
+                bossFightManager = new ContentManager(this.Services, "bossFight");
+                unloaded = true;
         }
 
         protected void loadLevel1()
@@ -472,6 +477,7 @@ namespace MainGame
             objectTexture2 = level1Manager.Load<Texture2D>("Book 2");
             objectTexture3 = level1Manager.Load<Texture2D>("Book 3");
             objectTexture4 = level1Manager.Load<Texture2D>("Book 4");
+            unloaded = false;
         }
 
         protected void loadLevel2()
@@ -485,6 +491,7 @@ namespace MainGame
             labObjectTexture2 = level2Manager.Load<Texture2D>("Calculator2");
             labObjectTexture3 = level2Manager.Load<Texture2D>("Calculator3");
             labObjectTexture4 = level2Manager.Load<Texture2D>("Calculator4");
+            unloaded = false;
             
         }
 
@@ -499,12 +506,16 @@ namespace MainGame
             cafObjectTexture2 = level3Manager.Load<Texture2D>("pl2");
             cafObjectTexture3 = level3Manager.Load<Texture2D>("pl3");
             cafObjectTexture4 = level3Manager.Load<Texture2D>("pl4");
+            unloaded = false;
             
         }
 
         protected void loadBossFight()
         {
             unloadAll();
+
+            unloaded = false;
+            
             bossLoading = bossFightManager.Load<Texture2D>("CatheralOfSavageryLoading");//should load from boss fight load
             bossFightBG = bossFightManager.Load<Texture2D>("Final Level");
 
@@ -1727,7 +1738,7 @@ namespace MainGame
         public void loadPreviousLevelProgress()
         {
             string line;
-            System.IO.StreamReader file1 = new System.IO.StreamReader("save/SavedProgress.txt");
+            System.IO.StreamReader file1 = new System.IO.StreamReader("SavedProgress.txt");
             while ((line = file1.ReadLine()) != null)
             {
                 if (line.Contains("L0,"))
@@ -1795,7 +1806,7 @@ namespace MainGame
         public void loadPreviousSaves()
         {
             string line;
-            System.IO.StreamReader file = new System.IO.StreamReader("save/SavedGame.txt");
+            System.IO.StreamReader file = new System.IO.StreamReader("SavedGame.txt");
             while ((line = file.ReadLine()) != null)
             {
                 if (line.Length != 0)
@@ -1922,13 +1933,13 @@ namespace MainGame
                     for (int x = 0; x < InventoryHolder.inventory[i].amount; x++)
                         saved += InventoryHolder.inventory[i].name + ",\r\n";
                 }
-                System.IO.File.WriteAllText(@"save/SavedGame.txt", saved);
+                System.IO.File.WriteAllText(@"SavedGame.txt", saved);
 
                 //Level Progress
                 saved = "";
                 for (int i = 0; i < levelScores.Length; i++)
                     saved += ("L" + i + "," + levelScores[i] + "\r\n");
-                System.IO.File.WriteAllText(@"save/SavedProgress.txt", saved);
+                System.IO.File.WriteAllText(@"SavedProgress.txt", saved);
             }
             catch (Exception e)
             {
@@ -2002,8 +2013,8 @@ namespace MainGame
                 cheatCode = "";
                 //code to reset save file
                 String reset = "";
-                System.IO.File.WriteAllText(@"save/SavedGame.txt", reset);
-                System.IO.File.WriteAllText(@"save/SavedProgress.txt", reset);
+                System.IO.File.WriteAllText(@"SavedGame.txt", reset);
+                System.IO.File.WriteAllText(@"SavedProgress.txt", reset);
                 InventoryHolder.inventory = new List<DropItems>();
                 InventoryHolder.tmpInventory = new List<DropItems>();
                 craftingInventory = new DropItems[3, 4];
@@ -2129,7 +2140,7 @@ namespace MainGame
                     }
                 }
                 mainMenu = true;
-                unloadAll();
+                //unloadAll();
             }
             if (BGExtras.credits.isPlaying)
             {
@@ -2193,7 +2204,7 @@ namespace MainGame
                         BGExtras.credits.currentSection = 0;
                         BGExtras.credits.reset();
                         mainMenu = true;
-                        unloadAll();
+                        //unloadAll();
                         BGExtras.credits.isPlaying = false;
                         
                         for (int i = 0; i < enemies.getSize(); i++)
@@ -2568,7 +2579,7 @@ namespace MainGame
                     {
                         mainMenuRow = 1;
                         mainMenu = true;
-                        unloadAll();
+                        //unloadAll();
                     }
                 }
 
@@ -3417,7 +3428,7 @@ namespace MainGame
         public void gotoLevel(int level)
         {
             BGExtras.teslaCoil = null;
-
+            
             this.level = level;
             if (level == 0)
                 loadTut();
@@ -4543,153 +4554,160 @@ namespace MainGame
 
         public void universalDraw()
         {
-            spriteBatch.Begin();
-
-
-            BGExtras.allBloodSplashes.Draw(spriteBatch);
-
-            if (enemies.isAllDead())
+            if (!crafting)
             {
-                // arrowAnimation.Draw(spriteBatch);
-            }
+                spriteBatch.Begin();
 
-            //not picked up yet
-            for (int i = 0; i < throwObjects.Count; i++)
-            {
-                if (!throwObjects[i].pickedUp)
-                    throwObjects[i].Draw(spriteBatch);
-            }
 
-            
+                BGExtras.allBloodSplashes.Draw(spriteBatch);
 
-            if (enemies.getSize() == 0)
-                player.Draw(spriteBatch);
-            else
-            {
-                int playerZIndex = enemies.orderEnemiesByPlacement(player.getPosition().Y);
-                if (playerZIndex == enemies.getSize())
+                if (enemies.isAllDead())
+                {
+                    // arrowAnimation.Draw(spriteBatch);
+                }
+
+                //not picked up yet
+                for (int i = 0; i < throwObjects.Count; i++)
+                {
+                    if (!throwObjects[i].pickedUp)
+                        throwObjects[i].Draw(spriteBatch);
+                }
+
+
+
+                if (enemies.getSize() == 0)
                     player.Draw(spriteBatch);
-                for (int i = 0; i < enemies.getSize(); i++)
+                else
                 {
-                    if (enemies.getAtIndex(i) != null && enemies.getAtIndex(i).dead && enemies.getAtIndex(i).speed != 0 && !enemies.getAtIndex(i).type.Equals("evilJP"))
-                        enemies.getAtIndex(i).Draw(spriteBatch);
+                    int playerZIndex = enemies.orderEnemiesByPlacement(player.getPosition().Y);
+                    if (playerZIndex == enemies.getSize())
+                        player.Draw(spriteBatch);
+                    for (int i = 0; i < enemies.getSize(); i++)
+                    {
+                        if (enemies.getAtIndex(i) != null && enemies.getAtIndex(i).dead && enemies.getAtIndex(i).speed != 0 && !enemies.getAtIndex(i).type.Equals("evilJP"))
+                            enemies.getAtIndex(i).Draw(spriteBatch);
+                    }
+
+
+                    //Draw Boss On top
+                    for (int i = 0; i < enemies.getSize(); i++)
+                    {
+                        if (enemies.getAtIndex(i) != null && enemies.getAtIndex(i).dead && enemies.getAtIndex(i).speed != 0 && enemies.getAtIndex(i).type.Equals("evilJP"))
+                            enemies.getAtIndex(i).Draw(spriteBatch);
+                    }
+
+
+                    //draw loot above dead enemies
+                    for (int i = 0; i < InventoryHolder.tmpInventory.Count; i++)
+                    {
+                        if (!InventoryHolder.tmpInventory[i].pickedUp)
+                            InventoryHolder.tmpInventory[i].Draw(spriteBatch);
+                    }
+
+                    for (int i = 0; i < enemies.getSize(); i++)
+                    {
+                        if (enemies.getAtIndex(i) != null && enemies.getAtIndex(i).dying && (!enemies.getAtIndex(i).dead) && !enemies.getAtIndex(i).type.Equals("evilJP"))
+                            enemies.getAtIndex(i).Draw(spriteBatch);
+                    }
+
+                    //Draw Boss On top
+                    for (int i = 0; i < enemies.getSize(); i++)
+                    {
+                        if (enemies.getAtIndex(i) != null && enemies.getAtIndex(i).dying && (!enemies.getAtIndex(i).dead) && enemies.getAtIndex(i).type.Equals("evilJP"))
+                            enemies.getAtIndex(i).Draw(spriteBatch);
+                    }
+                    for (int i = 0; i < enemies.getSize(); i++)
+                    {
+                        if (playerZIndex == i)
+                        {
+                            player.Draw(spriteBatch);
+                            if (!enemies.getAtIndex(i).dying || enemies.getAtIndex(i).speed == 0)
+                                enemies.getAtIndex(i).Draw(spriteBatch);
+                        }
+                        else if (enemies.getAtIndex(i) != null && (!enemies.getAtIndex(i).dying || enemies.getAtIndex(i).speed == 0))
+                            enemies.getAtIndex(i).Draw(spriteBatch);
+                    }
+                    if (playerZIndex == enemies.getSize())
+                        player.Draw(spriteBatch);
                 }
 
-
-                //Draw Boss On top
-                for (int i = 0; i < enemies.getSize(); i++)
+                //picked up
+                for (int i = 0; i < throwObjects.Count; i++)
                 {
-                    if (enemies.getAtIndex(i) != null && enemies.getAtIndex(i).dead && enemies.getAtIndex(i).speed != 0 && enemies.getAtIndex(i).type.Equals("evilJP"))
-                        enemies.getAtIndex(i).Draw(spriteBatch);
+                    if (throwObjects[i].pickedUp)
+                        throwObjects[i].Draw(spriteBatch);
                 }
 
+                if (BGExtras.teslaCoil != null && (level == 2 || level == 4 || level == 3))
+                    BGExtras.teslaCoil.Draw(spriteBatch);
 
-                //draw loot above dead enemies
+                //particle system
+                particleSystem.Draw(spriteBatch);
+                particleSystem2.Draw(spriteBatch);
+
                 for (int i = 0; i < InventoryHolder.tmpInventory.Count; i++)
                 {
-                    if (!InventoryHolder.tmpInventory[i].pickedUp)
+                    if (InventoryHolder.tmpInventory[i].pickedUp)
                         InventoryHolder.tmpInventory[i].Draw(spriteBatch);
                 }
 
-                for (int i = 0; i < enemies.getSize(); i++)
+
+                //Draw Enemy HUD
+                if (enemyHud2 != null && enemyHud1 != null && enemyHud1.drawThumbNail && enemyHud2.drawThumbNail)
                 {
-                    if (enemies.getAtIndex(i) != null && enemies.getAtIndex(i).dying && (!enemies.getAtIndex(i).dead) && !enemies.getAtIndex(i).type.Equals("evilJP"))
-                        enemies.getAtIndex(i).Draw(spriteBatch);
+                    spriteBatch.Draw(twoEnemyHUD, new Vector2(0, 0), Color.White);
+
+                    spriteBatch.Draw(enemyHud1.thumbnail, new Vector2(1112, 35), Color.White);
+
+                    int width = (int)((enemyHud1.getHitpoints() / enemyHud1.getMaxHitPoints()) * 141);
+                    Rectangle drawHere = new Rectangle(1099, 168, width, 12);
+                    spriteBatch.Draw(blankHealthBar, new Vector2(1099, 168), Color.White);
+                    spriteBatch.Draw(enemyHealthBar, drawHere, Color.White);
+
+                    spriteBatch.Draw(enemyHud2.thumbnail, new Vector2(1288, 35), Color.White);
+                    width = (int)((enemyHud2.getHitpoints() / enemyHud2.getMaxHitPoints()) * 141);
+                    drawHere = new Rectangle(1275, 168, width, 12);
+                    spriteBatch.Draw(blankHealthBar, new Vector2(1275, 168), Color.White);
+                    spriteBatch.Draw(enemyHealthBar, drawHere, Color.White);
+                }
+                else if ((enemyHud2 == null || (enemyHud2 != null && !enemyHud2.drawThumbNail)) && (enemyHud1 != null && enemyHud1.drawThumbNail))
+                {
+                    spriteBatch.Draw(oneEnemyHUD, new Vector2(0, 0), Color.White);
+                    spriteBatch.Draw(enemyHud1.thumbnail, new Vector2(1288, 35), Color.White);
+                    int width = (int)((enemyHud1.getHitpoints() / enemyHud1.getMaxHitPoints()) * 141);
+                    Rectangle drawHere = new Rectangle(1275, 168, width, 12);
+                    spriteBatch.Draw(blankHealthBar, new Vector2(1275, 168), Color.White);
+                    spriteBatch.Draw(enemyHealthBar, drawHere, Color.White);
                 }
 
-                //Draw Boss On top
-                for (int i = 0; i < enemies.getSize(); i++)
+
+                spriteBatch.End();
+                hud.Draw();
+
+            }
+
+                spriteBatch.Begin();
+                if (!crafting)
                 {
-                    if (enemies.getAtIndex(i) != null && enemies.getAtIndex(i).dying && (!enemies.getAtIndex(i).dead) && enemies.getAtIndex(i).type.Equals("evilJP"))
-                        enemies.getAtIndex(i).Draw(spriteBatch);
-                }
-                for (int i = 0; i < enemies.getSize(); i++)
-                {
-                    if (playerZIndex == i)
+                    switch (drawSplash)
                     {
-                        player.Draw(spriteBatch);
-                        if (!enemies.getAtIndex(i).dying || enemies.getAtIndex(i).speed == 0)
-                            enemies.getAtIndex(i).Draw(spriteBatch);
+                        case 1: spriteBatch.Draw(levelCompleteAPlus, new Vector2(0, 0), Color.White); break;
+                        case 2: spriteBatch.Draw(levelCompleteA, new Vector2(0, 0), Color.White); break;
+                        case 3: spriteBatch.Draw(levelCompleteB, new Vector2(0, 0), Color.White); break;
+                        case 4: spriteBatch.Draw(levelCompleteC, new Vector2(0, 0), Color.White); break;
+                        case 5: spriteBatch.Draw(levelCompleteD, new Vector2(0, 0), Color.White); break;
+                        case 6: spriteBatch.Draw(levelFailed, new Vector2(0, 0), Color.White); break;
                     }
-                    else if (enemies.getAtIndex(i) != null && (!enemies.getAtIndex(i).dying || enemies.getAtIndex(i).speed == 0))
-                        enemies.getAtIndex(i).Draw(spriteBatch);
                 }
-                if (playerZIndex == enemies.getSize())
-                    player.Draw(spriteBatch);
-            }
 
-            //picked up
-            for (int i = 0; i < throwObjects.Count; i++)
-            {
-                if (throwObjects[i].pickedUp)
-                    throwObjects[i].Draw(spriteBatch);
-            }
-
-            if (BGExtras.teslaCoil != null && (level == 2 || level == 4 || level == 3))
-                BGExtras.teslaCoil.Draw(spriteBatch);
-
-            //particle system
-            particleSystem.Draw(spriteBatch);
-            particleSystem2.Draw(spriteBatch);
-
-            for (int i = 0; i < InventoryHolder.tmpInventory.Count; i++)
-            {
-                if (InventoryHolder.tmpInventory[i].pickedUp)
-                    InventoryHolder.tmpInventory[i].Draw(spriteBatch);
-            }
-
-
-            //Draw Enemy HUD
-            if (enemyHud2 != null && enemyHud1 != null && enemyHud1.drawThumbNail && enemyHud2.drawThumbNail)
-            {
-                spriteBatch.Draw(twoEnemyHUD, new Vector2(0, 0), Color.White);
-
-                spriteBatch.Draw(enemyHud1.thumbnail, new Vector2(1112, 35), Color.White);
-
-                int width = (int)((enemyHud1.getHitpoints() / enemyHud1.getMaxHitPoints()) * 141);
-                Rectangle drawHere = new Rectangle(1099, 168, width, 12);
-                spriteBatch.Draw(blankHealthBar, new Vector2(1099, 168), Color.White);
-                spriteBatch.Draw(enemyHealthBar, drawHere, Color.White);
-
-                spriteBatch.Draw(enemyHud2.thumbnail, new Vector2(1288, 35), Color.White);
-                width = (int)((enemyHud2.getHitpoints() / enemyHud2.getMaxHitPoints()) * 141);
-                drawHere = new Rectangle(1275, 168, width, 12);
-                spriteBatch.Draw(blankHealthBar, new Vector2(1275, 168), Color.White);
-                spriteBatch.Draw(enemyHealthBar, drawHere, Color.White);
-            }
-            else if ((enemyHud2 == null || (enemyHud2 != null && !enemyHud2.drawThumbNail)) && (enemyHud1 != null && enemyHud1.drawThumbNail))
-            {
-                spriteBatch.Draw(oneEnemyHUD, new Vector2(0, 0), Color.White);
-                spriteBatch.Draw(enemyHud1.thumbnail, new Vector2(1288, 35), Color.White);
-                int width = (int)((enemyHud1.getHitpoints() / enemyHud1.getMaxHitPoints()) * 141);
-                Rectangle drawHere = new Rectangle(1275, 168, width, 12);
-                spriteBatch.Draw(blankHealthBar, new Vector2(1275, 168), Color.White);
-                spriteBatch.Draw(enemyHealthBar, drawHere, Color.White);
-            }
-
-
-            spriteBatch.End();
-            hud.Draw();
-
-            spriteBatch.Begin();
-            if (!crafting)
-                switch (drawSplash)
+                if (drawBrawlAlpha > 0 && (drawBrawlDown))
                 {
-                    case 1: spriteBatch.Draw(levelCompleteAPlus, new Vector2(0, 0), Color.White); break;
-                    case 2: spriteBatch.Draw(levelCompleteA, new Vector2(0, 0), Color.White); break;
-                    case 3: spriteBatch.Draw(levelCompleteB, new Vector2(0, 0), Color.White); break;
-                    case 4: spriteBatch.Draw(levelCompleteC, new Vector2(0, 0), Color.White); break;
-                    case 5: spriteBatch.Draw(levelCompleteD, new Vector2(0, 0), Color.White); break;
-                    case 6: spriteBatch.Draw(levelFailed, new Vector2(0, 0), Color.White); break;
+                    Color myColor = Color.White * drawBrawlAlpha;
+                    finalBrawlAnimation.Draw(spriteBatch, drawBrawlAlpha);
                 }
 
-            if (drawBrawlAlpha > 0 && (drawBrawlDown))
-            {
-                Color myColor = Color.White * drawBrawlAlpha;
-                finalBrawlAnimation.Draw(spriteBatch, drawBrawlAlpha);
-            }
-
-            spriteBatch.End();
+                spriteBatch.End();
+           
         }
 
         public void craftingMenuDraw()
